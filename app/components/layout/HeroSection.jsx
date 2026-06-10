@@ -2,12 +2,9 @@
 
 import { useState } from 'react'
 import { Search, MapPin, Calendar, Users, Building2, Sparkles } from 'lucide-react'
+import {heroImages} from "@/app/constants"
 
-const heroImages = [
-  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1400&q=80",
-  "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1400&q=80",
-  "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1170&auto=format&fit=crop",
-];
+
 
 const tabs = ['Venue', 'Vendors']
 
