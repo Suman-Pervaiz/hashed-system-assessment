@@ -2,59 +2,10 @@
 
 import { useState, useRef } from 'react'
 import { ChevronLeft, ChevronRight, MapPin, Users, Maximize2, Car, BadgeCheck, Heart, Share2 } from 'lucide-react'
+import {filterTabs , venues} from "@/app/constants"
+import Image from 'next/image'
 
-const filterTabs = ['ROOFTOP', 'GALLERY', 'RESTAURANT', 'OUTDOOR', 'STUDIO', 'TERRACE', 'BALLROOM']
 
-const venues = [
-  {
-    id: 1,
-    name: 'High-Spec Room in Trendy Home Clapham/Stockwell',
-    location: 'London, SW1',
-    price: '$50/hour',
-    guests: '300+',
-    sqft: '1,593 sq ft',
-    parking: 'Free parking',
-    extra: '+26 more',
-    verified: true,
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&q=80',
-  },
-  {
-    id: 2,
-    name: 'High-Spec Room in Trendy Home Clapham/Stockwell',
-    location: 'London, SW1',
-    price: '$50/hour',
-    guests: '280+',
-    sqft: '2,400 sq ft',
-    parking: 'Free parking',
-    extra: '+20 more',
-    verified: true,
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80',
-  },
-  {
-    id: 3,
-    name: 'High-Spec Room in Trendy Home Clapham/Stockwell',
-    location: 'London, SW1',
-    price: '$50/hour',
-    guests: '300+',
-    sqft: '2,900 sq ft',
-    parking: 'Free parking',
-    extra: '+26 more',
-    verified: true,
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
-  },
-  {
-    id: 4,
-    name: 'High-Spec Room in Trendy Home Clapham/Stockwell',
-    location: 'London, SW1',
-    price: '$50/hour',
-    guests: '300+',
-    sqft: '2,000 sq ft',
-    parking: 'Free parking',
-    extra: '+36 more',
-    verified: true,
-    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&q=80',
-  },
-]
 
 function VenueCard({ venue }) {
   const [liked, setLiked] = useState(false)
@@ -63,7 +14,9 @@ function VenueCard({ venue }) {
     <div className="shrink-0 w-64 md:w-72 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group">
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
-        <img
+        <Image
+         width={301}
+         height={400}
           src={venue.image}
           alt={venue.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -189,18 +142,25 @@ const FeaturedVenues = () => {
             ))}
           </div>
 
-          <button
-            onClick={() => scroll(-1)}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors z-10"
-          >
-            <ChevronLeft size={18} className="text-gray-700" />
-          </button>
-          <button
-            onClick={() => scroll(1)}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors z-10"
-          >
-            <ChevronRight size={18} className="text-gray-700" />
-          </button>
+         
+          <div className="absolute bottom-[-50px] right-0 flex gap-2 mt-4 md:mt-0">
+            <button
+              onClick={() => scroll(-1)} // This will do nothing as scroll() is empty
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
+                         opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <ChevronLeft size={18} className="text-gray-700" />
+            </button>
+            <button
+              onClick={() => scroll(1)} 
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
+                         opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <ChevronRight size={18} className="text-gray-700" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
