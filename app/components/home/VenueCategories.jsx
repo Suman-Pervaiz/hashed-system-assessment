@@ -1,5 +1,4 @@
 'use client'
-
 import { useRef, useState, useEffect } from 'react' 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { categories } from "@/app/constants"
@@ -8,16 +7,14 @@ import Image from 'next/image'
 const VenueCategories = () => {
   const scrollRef = useRef(null)
   const [currentIndex, setCurrentIndex] = useState(0) 
- 
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const cardWidth = scrollRef.current.children[0].offsetWidth + 16; // Card width + gap
+      const cardWidth = scrollRef.current.children[0].offsetWidth + 16;
       const totalCards = categories.length;
 
       let newIndex = currentIndex + direction;
 
-      // loop for the images
       if (newIndex < 0) {
         newIndex = totalCards - 1; 
       } else if (newIndex >= totalCards) {
@@ -32,7 +29,6 @@ const VenueCategories = () => {
     }
   }
 
-  // useeffect for moble responsiveness 
   useEffect(() => {
     if (scrollRef.current) {
       const cardWidth = scrollRef.current.children[0].offsetWidth + 16;
@@ -57,7 +53,7 @@ const VenueCategories = () => {
         </p>
       </div>
 
-      {/* carousel + arrowss */}
+      {/* carousel + arrows */}
       <div className="relative">
         
         <div
@@ -68,28 +64,23 @@ const VenueCategories = () => {
             <div
               key={cat.name}
              
-              className="relative shrink-0 w-[calc((100%-48px)/4)] max-w-[301px] h-[400px] rounded-2xl overflow-hidden cursor-pointer group
-                         md:w-[calc((100%-48px)/4)]" 
-              style={{ width: '301px', height: '400px' }}
+              className="relative shrink-0 rounded-2xl overflow-hidden cursor-pointer group h-[400px]
+                         w-[calc(100vw-2rem)]
+                         md:w-[calc(50%-8px)]
+                         lg:w-[301px]"
             >  
-
               {/* Image */}
               <Image
-    src={cat.image}
-    alt={cat.name}
-    fill
-    className="object-cover transition-transform duration-500 group-hover:scale-105"
-  />
-              {/* <img
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              /> */}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
 
-              {/* Overlay gradient */}
+              
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-              {/* Venue count badge */}
+            
               <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
                 {cat.count} Venues
               </span>

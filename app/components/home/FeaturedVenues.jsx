@@ -1,17 +1,17 @@
 'use client'
-
 import { useState, useRef } from 'react'
 import { ChevronLeft, ChevronRight, MapPin, Users, Maximize2, Car, BadgeCheck, Heart, Share2 } from 'lucide-react'
 import {filterTabs , venues} from "@/app/constants"
 import Image from 'next/image'
 
-
-
 function VenueCard({ venue }) {
   const [liked, setLiked] = useState(false)
 
   return (
-    <div className="shrink-0 w-64 md:w-72 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group">
+  <div className="shrink-0 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group
+                    w-[calc(100vw-2rem)]
+                    md:w-[calc(100vw-4rem)]
+                    lg:w-72">
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
         <Image
@@ -77,7 +77,6 @@ function VenueCard({ venue }) {
           </span>
         </div>
 
-        {/* Extra amenities */}
         <p className="text-[11px] text-gray-400 mb-4">{venue.extra}</p>
 
         {/* Price + CTA */}
@@ -100,7 +99,11 @@ const FeaturedVenues = () => {
   const scrollRef = useRef(null)
 
   const scroll = (dir) => {
-    scrollRef.current?.scrollBy({ left: dir * 300, behavior: 'smooth' })
+    if (scrollRef.current) {
+      
+      const cardWidth = scrollRef.current.children[0]?.offsetWidth + 16 || 300
+      scrollRef.current.scrollBy({ left: dir * cardWidth, behavior: 'smooth' })
+    }
   }
 
   return (
@@ -142,21 +145,16 @@ const FeaturedVenues = () => {
             ))}
           </div>
 
-         
           <div className="absolute bottom-[-50px] right-0 flex gap-2 mt-4 md:mt-0">
             <button
-              onClick={() => scroll(-1)} // This will do nothing as scroll() is empty
-              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
-                         opacity-50 cursor-not-allowed"
-              disabled
+              onClick={() => scroll(-1)}
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
             >
               <ChevronLeft size={18} className="text-gray-700" />
             </button>
             <button
-              onClick={() => scroll(1)} 
-              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
-                         opacity-50 cursor-not-allowed"
-              disabled
+              onClick={() => scroll(1)}
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
             >
               <ChevronRight size={18} className="text-gray-700" />
             </button>

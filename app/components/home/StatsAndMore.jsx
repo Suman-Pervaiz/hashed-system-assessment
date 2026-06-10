@@ -11,8 +11,6 @@ const StatsAndMore = () => {
   
   return (
     <>
-      
-      
       <section className="py-16 px-4 md:px-8 bg-[#FFF7E8]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
@@ -67,7 +65,7 @@ const StatsAndMore = () => {
         
       </section>
   
-      {/* ── Destinations ── */}
+      {/* Destinations  */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
@@ -115,7 +113,7 @@ const StatsAndMore = () => {
         </div>
       </section>
 
-      {/* ── Turn Your Venue CTA ── */}
+      {/* Turn Your Venue CTA */}
   
             <section className="py-8 px-4 md:px-8 bg-white relative z-10"> 
               <div className="max-w-7xl mx-auto -mb-20 md:-mb-32"> 

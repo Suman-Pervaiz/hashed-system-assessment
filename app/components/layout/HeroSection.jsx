@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -20,12 +21,12 @@ const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImages[currentSlide]})` }}
       />
 
-      {/* Dark overlay */}
+      
       <div className="absolute inset-0 bg-black/50" />
 
       
-      {/* Hero content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">
+      {/* Hero content*/}
+      <div className="relative z-10 h-full flex flex-col items-center justify-start md:justify-center px-4 text-center pt-16 md:pt-0">
         {/* Heading */}
         <h1 className="text-white font-bold text-3xl md:text-5xl leading-tight max-w-xl mb-8">
           Celebrate in venues<br />big and small
@@ -53,7 +54,7 @@ const HeroSection = () => {
 
           {/* Search fields */}
           <div className="flex flex-col md:flex-row items-stretch divide-y md:divide-y-0 md:divide-x divide-gray-100">
-            {/* Where */}
+          
             <div className="flex-1 flex items-center gap-3 px-5 py-4">
               <MapPin size={16} className="text-gray-400 shrink-0" />
               <div className="flex flex-col text-left">

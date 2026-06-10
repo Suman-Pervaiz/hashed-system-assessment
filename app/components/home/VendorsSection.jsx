@@ -6,11 +6,16 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { howItWorksImages, steps, vendorstwo } from "@/app/constants"
 
-
-
 const VendorsSection = () => {
   const scrollRef = useRef(null)
-  const scroll = (dir) => scrollRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' })
+
+  const scroll = (dir) => {
+    if (scrollRef.current) {
+
+      const cardWidth = scrollRef.current.children[0]?.offsetWidth + 16 || 320
+      scrollRef.current.scrollBy({ left: dir * cardWidth, behavior: 'smooth' })
+    }
+  }
 
   return (
     <>
@@ -32,13 +37,16 @@ const VendorsSection = () => {
           <div className="relative">
             <div
               ref={scrollRef}
-              className="flex gap-4 overflow-x-auto scroll-smooth pb-2 no-scrollbar justify-center md:justify-start" // Added justify-center for smaller screens
+              className="flex gap-4 overflow-x-auto scroll-smooth pb-2 no-scrollbar"
             >
               {vendorstwo.map((v) => (
                 <div
                   key={v.name}
-                  className="relative shrink-0 w-[301px] h-[400px] rounded-[20px] overflow-hidden cursor-pointer group" // Applied card specifications
-
+                 
+                  className="relative shrink-0 rounded-[20px] overflow-hidden cursor-pointer group h-[400px]
+                             w-[calc(100vw-2rem)]
+                             md:w-[calc(100vw-4rem)]
+                             lg:w-[301px]"
                 >
                   <img
                     src={v.image}
@@ -51,26 +59,23 @@ const VendorsSection = () => {
               ))}
             </div>
 
-
             <div className="absolute bottom-[-50px] right-0 flex gap-2 mt-4 md:mt-0">
               <button
-                onClick={() => scroll(-1)} // This will do nothing as scroll() is empty
-                className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
-                         opacity-50 cursor-not-allowed"
-                disabled
+                onClick={() => scroll(-1)}
+                className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
               >
                 <ChevronLeft size={18} className="text-gray-700" />
               </button>
               <button
                 onClick={() => scroll(1)}
-                className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
-                         opacity-50 cursor-not-allowed"
-                disabled
+                className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
               >
                 <ChevronRight size={18} className="text-gray-700" />
               </button>
             </div>
-          </div>{/*  Grow Your Business CTA */}
+          </div>
+
+          {/*  Grow Your Business CTA */}
           <section className="py-8 px-4 md:px-8 bg-[#FDF1D2] relative z-10">
             <div className="max-w-7xl mx-auto -mb-20 md:-mb-32">
               <div
@@ -89,7 +94,6 @@ const VendorsSection = () => {
                     Join as a Vendor
                   </button>
                 </div>
-
 
                 <div className="w-48 h-32 md:w-64 md:h-44 flex items-center justify-center opacity-90">
                   <Image
@@ -114,10 +118,8 @@ const VendorsSection = () => {
         </div>
       </section>
 
-
-
       {/* Your Path Section*/}
-      <section className="py-16 px-4 md:px-8 bg-white relative z-0"> {/* Added relative and z-0 */}
+      <section className="py-16 px-4 md:px-8 bg-white relative z-0">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-20">
