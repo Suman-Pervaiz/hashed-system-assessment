@@ -1,3 +1,5 @@
+import '@mantine/core/styles.css';
+
 import { Inter } from 'next/font/google'
 import { MantineProvider } from '@mantine/core'
 import './globals.css'
@@ -14,8 +16,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <MantineProvider>
-
+         
         {children}
+
+          
+
         </MantineProvider>
       </body>
     </html>

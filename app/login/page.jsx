@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import useUserStore from '@/store/userStore'
 
 const LoginPage = () => {
   const router = useRouter()
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const setUser = useUserStore.getState().setUser;
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -31,6 +33,11 @@ const LoginPage = () => {
 
       // save in cookie (IMPORTANT for middleware)
       document.cookie = `token=${token}; path=/`
+
+       setUser({
+    email: email,
+    name: "Suman Pervaiz", // optional
+  });
 
       router.push('/dashboard')
     } else {

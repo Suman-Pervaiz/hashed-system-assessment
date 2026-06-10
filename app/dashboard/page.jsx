@@ -1,144 +1,242 @@
-// 'use client'
 
-// import { useRouter } from 'next/navigation'
-// import { useEffect } from 'react'
 
-// const Dashboard = () => {
-//   const router = useRouter()
+"use client";
 
-//   useEffect(() => {
-//     const token = document.cookie.split('token=')[1]
+import useSWR from "swr";
+import { useState } from "react";
+import { Pagination, Skeleton } from "@mantine/core";
+import { toast } from "react-toastify";
 
-//     if (!token) {
-//       router.push('/login')
-//     }
-//   }, [])
+import {
+  getAllUsers,
+  addUser,
+  updateUser,
+  deleteUser,
+} from "@/app/services/api/user.js";
 
-//   const handleLogout = () => {
-//     document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC'
-//     router.push('/login')
-//   }
+import useUserStore from "@/store/userStore";
+import AddUserModal from "@/app/components/AddUserModal";
+import EditUserModal from "@/app/components/EditUserModal";
+import DeleteUserModal from "@/app/components/DeleteUserModal";
 
-//   return (
-//     <div className="min-h-screen bg-gray-950 text-white p-6">
-//       <div className="flex justify-between items-center">
-//         <h1 className="text-2xl font-bold">Dashboard</h1>
+//fetcher for swr 
+const fetcher = async () => {
+  const res = await getAllUsers();
+  return res;
+};
 
-//         <button
-//           onClick={handleLogout}
-//           className="px-4 py-2 rounded bg-red-600 hover:bg-red-700"
-//         >
-//           Logout
-//         </button>
-//       </div>
+const UsersPage = () => {
+  const { data = [], mutate, isLoading } = useSWR("allUsers", fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+  });
 
-//       <div className="mt-6">
-//         <p className="text-gray-300">
-//           Welcome to authenticated dashboard 🎉
-//         </p>
-//       </div>
-//     </div>
-//   )
-// }
+  const { isModalOpen, modalType, selectedUser, closeModal, openModal } =
+    useUserStore();
 
-// export default Dashboard
-'use client'
+  const [activePage, setActivePage] = useState(1);
+  const [search, setSearch] = useState("");
 
-import { Users, Building2, CalendarCheck, TrendingUp, ArrowUpRight, ArrowDownRight } from 'lucide-react'
-import { Skeleton } from '@mantine/core'
-import useSWR from 'swr'
+  const pageSize = 10;
 
-const fetcher = (url) => fetch(url).then(r => r.json())
+  const filteredData = data.filter((user) => {
+    const query = search.toLowerCase();
 
-const statsConfig = [
-  { label: 'Total Users', icon: Users, color: 'bg-blue-50 text-blue-600', key: 'total_users', value: '3,456', change: '+12%', up: true },
-  { label: 'Active Venues', icon: Building2, color: 'bg-orange-50 text-[#FF5037]', key: 'venues', value: '1,284', change: '+8%', up: true },
-  { label: 'Events Hosted', icon: CalendarCheck, color: 'bg-green-50 text-green-600', key: 'events', value: '7,500+', change: '+5%', up: true },
-  { label: 'Avg. Host Rating', icon: TrendingUp, color: 'bg-yellow-50 text-yellow-600', key: 'rating', value: '4.9★', change: '-0.1', up: false },
-]
-
-function StatCard({ stat, loading }) {
-  const Icon = stat.icon
-  if (loading) {
     return (
-      <div className="bg-white rounded-2xl p-5 shadow-sm">
-        <Skeleton height={20} width={100} mb={12} radius="md" />
-        <Skeleton height={32} width={80} mb={8} radius="md" />
-        <Skeleton height={16} width={60} radius="md" />
-      </div>
-    )
-  }
+      user.name?.toLowerCase().includes(query) ||
+      user.email?.toLowerCase().includes(query) ||
+      user.phone?.toLowerCase().includes(query)
+    );
+  });
+
+  //pagination from mantine UI
+  const startIndex = (activePage - 1) * pageSize;
+  const paginatedData = filteredData.slice(
+    startIndex,
+    startIndex + pageSize
+  );
+
+  const handleSubmit = async (formData) => {
+    try {
+      if (modalType === "add") {
+        const newUser = await addUser(formData);
+
+        toast.success("User added successfully");
+
+        //add new user to the Top not to the end
+        mutate((prev = []) => [newUser, ...prev], false);
+         closeModal();
+         return; 
+      }
+
+      if (modalType === "edit") {
+        await updateUser(selectedUser.id, formData);
+        toast.success("User updated successfully");
+      }
+
+      if (modalType === "delete") {
+        await deleteUser(selectedUser.id);
+        toast.success("User deleted successfully");
+        closeModal();
+      }
+
+      mutate(); //Instant UI Update
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-medium text-gray-500">{stat.label}</span>
-        <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${stat.color}`}>
-          <Icon size={18} />
+    <div className="p-10 bg-gray-50 min-h-screen">
+
+    
+      <div className="flex justify-between items-center mb-6">
+
+        <h1 className="text-2xl font-bold text-gray-800">
+          Users
+        </h1>
+
+        <div className="flex items-center gap-3">
+
+         
+          <input
+            type="text"
+            placeholder="Search by name, email, phone..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-3 py-2 border rounded-lg text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+
+  
+          <button
+            onClick={() => openModal("add")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow cursor-pointer"
+          >
+            + Add User
+          </button>
+
         </div>
       </div>
-      <p className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</p>
-      <div className={`flex items-center gap-1 text-xs font-medium ${stat.up ? 'text-green-600' : 'text-red-500'}`}>
-        {stat.up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}
-        {stat.change} from last month
+
+    {/* table section */}
+      <div className="bg-white rounded-xl shadow overflow-hidden">
+        <table className="w-full text-sm">
+
+          <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
+            <tr>
+              <th className="px-6 py-4 text-left">Name</th>
+              <th className="px-6 py-4 text-left">Email</th>
+              <th className="px-6 py-4 text-left">Phone</th>
+              <th className="px-6 py-4 text-center">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+         {/* skeleton from MantineUI */}
+            {isLoading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <tr key={i} className="border-t">
+                  <td className="px-6 py-4">
+                    <Skeleton height={12} width="70%" />
+                  </td>
+                  <td className="px-6 py-4">
+                    <Skeleton height={12} width="80%" />
+                  </td>
+                  <td className="px-6 py-4">
+                    <Skeleton height={12} width="60%" />
+                  </td>
+                  <td className="px-6 py-4">
+                    <Skeleton height={20} width="50%" />
+                  </td>
+                </tr>
+              ))
+            ) : paginatedData.length === 0 ? (
+
+            //  if there's no users in the DB
+              <tr>
+                <td colSpan={4} className="text-center py-16">
+                  <p className="text-gray-500 text-lg font-medium">
+                    No user found!
+                  </p>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Would like to Add?
+                  </p>
+                </td>
+              </tr>
+
+            ) : (
+
+             
+              paginatedData.map((user) => (
+                <tr
+                  key={user.id}
+                  className="border-t hover:bg-gray-50 transition"
+                >
+                  <td className="px-6 py-4">{user.name}</td>
+                  <td className="px-6 py-4">{user.email}</td>
+                  <td className="px-6 py-4">{user.phone}</td>
+
+                  <td className="px-6 py-4">
+                    <div className="flex justify-center gap-3">
+
+                      <button
+                        onClick={() => openModal("edit", user)}
+                        className="px-3 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 cursor-pointer"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => openModal("delete", user)}
+                        className="px-3 py-1 rounded-md bg-red-50 text-red-600 hover:bg-red-100 cursor-pointer"
+                      >
+                        Delete
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+
+        </table>
       </div>
+
+    
+      <div className="flex justify-end mt-5">
+        <Pagination
+          total={Math.ceil(filteredData.length / pageSize)}
+          value={activePage}
+          onChange={setActivePage}
+        />
+      </div>
+
+      {/* Modals */}
+      <AddUserModal
+        opened={isModalOpen && modalType === "add"}
+        onClose={closeModal}
+        onSubmit={handleSubmit}
+      />
+
+      <EditUserModal
+        opened={isModalOpen && modalType === "edit"}
+        onClose={closeModal}
+        user={selectedUser}
+        onSubmit={handleSubmit}
+      />
+
+      <DeleteUserModal
+        opened={isModalOpen && modalType === "delete"}
+        onClose={closeModal}
+        user={selectedUser}
+        onConfirm={handleSubmit}
+      />
+
     </div>
-  )
-}
+  );
+};
 
-const DashboardPage = () => {
-  // Fetch users to show real data count
-  const { data, isLoading } = useSWR('https://reqres.in/api/users?page=1', fetcher)
-
-  const dynamicStats = statsConfig.map(s =>
-    s.key === 'total_users' && data ? { ...s, value: data.total } : s
-  )
-
-  return (
-    <div className="flex flex-col gap-6">
-      {/* Stats grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {dynamicStats.map(stat => (
-          <StatCard key={stat.key} stat={stat} loading={isLoading} />
-        ))}
-      </div>
-
-      {/* Recent users preview */}
-      <div className="bg-white rounded-2xl shadow-sm p-6">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-bold text-gray-900">Recent Users</h2>
-          <a href="/dashboard/users" className="text-xs font-semibold text-[#FF5037] hover:underline flex items-center gap-1">
-            View all <ArrowUpRight size={13} />
-          </a>
-        </div>
-
-        {isLoading ? (
-          <div className="flex flex-col gap-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="flex items-center gap-3">
-                <Skeleton circle height={40} width={40} />
-                <div className="flex-1">
-                  <Skeleton height={14} width={120} mb={6} radius="md" />
-                  <Skeleton height={12} width={160} radius="md" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col divide-y divide-gray-50">
-            {data?.data?.slice(0, 4).map(user => (
-              <div key={user.id} className="flex items-center gap-3 py-3">
-                <img src={user.avatar} alt={user.first_name} className="w-10 h-10 rounded-full object-cover" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{user.first_name} {user.last_name}</p>
-                  <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                </div>
-                <span className="text-xs font-medium bg-green-50 text-green-600 px-2.5 py-1 rounded-full">Active</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-export default DashboardPage
+export default UsersPage;
