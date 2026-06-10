@@ -83,3 +83,33 @@ export const venues = [
     image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&q=80',
   },
 ]
+export const vendorstwo = [
+  { name: 'Caterers', image: 'https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80' },
+  { name: 'Decorators', image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80' },
+  { name: 'Photographers', image: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=80' },
+  { name: 'Entertainment', image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80' },
+  
+]
+export const steps = [
+  {
+    n: '1',
+    title: 'Search & filter',
+    desc: 'Browse our curated collection of venues and event professionals. Use smart filters, high-quality visuals, and authentic reviews to find options that fit your needs, style, and budget.',
+  },
+  {
+    n: '2',
+    title: 'Compare & message',
+    desc: 'Communicate directly with venue hosts and service providers. Request tailored quotes, discuss requirements, and design every detail of your event or project with confidence.',
+  },
+  {
+    n: '3',
+    title: 'Book & add services',
+    desc: 'Secure your choices with ease through our protected booking system. With clear agreements, secure payments, and ongoing support, you can move forward knowing everything is handled.',
+  },
+]
+export const howItWorksImages = [
+  'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&q=80',
+  'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80',
+  'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300&q=80',
+  'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=300&q=80',
+]

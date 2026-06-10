@@ -1,52 +1,24 @@
+
 'use client'
 
 import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
+import { howItWorksImages , steps, vendorstwo} from "@/app/constants"
 
-const vendors = [
-  { name: 'Caterers', image: 'https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80' },
-  { name: 'Decorators', image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80' },
-  { name: 'Photographers', image: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=80' },
-  { name: 'Entertainment', image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80' },
-  { name: 'Florists', image: 'https://images.unsplash.com/photo-1487530811015-780f6b80f6d3?w=400&q=80' },
-]
 
-const steps = [
-  {
-    n: '1',
-    title: 'Search & filter',
-    desc: 'Browse our curated collection of venues and event professionals. Use smart filters, high-quality visuals, and authentic reviews to find options that fit your needs, style, and budget.',
-  },
-  {
-    n: '2',
-    title: 'Compare & message',
-    desc: 'Communicate directly with venue hosts and service providers. Request tailored quotes, discuss requirements, and design every detail of your event or project with confidence.',
-  },
-  {
-    n: '3',
-    title: 'Book & add services',
-    desc: 'Secure your choices with ease through our protected booking system. With clear agreements, secure payments, and ongoing support, you can move forward knowing everything is handled.',
-  },
-]
-
-const howItWorksImages = [
-  'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&q=80',
-  'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80',
-  'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300&q=80',
-  'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=300&q=80',
-]
 
 const VendorsSection = () => {
   const scrollRef = useRef(null)
-  const scroll = (dir) => scrollRef.current?.scrollBy({ left: dir * 280, behavior: 'smooth' })
+  const scroll = (dir) => scrollRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' }) 
 
   return (
     <>
-      {/* ── Vendors ── */}
+      {/* vendors*/}
       <section className="py-16 px-4 md:px-8 bg-[#FDF1D2]">
         <div className="max-w-7xl mx-auto">
-          {/* Heading — outlined box */}
-          <div className="border-2 border-gray-800 rounded-xl p-6 text-center mb-10">
+     
+          <div className="p-6 text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
               Complete Your Event with our Trusted Vendors
             </h2>
@@ -60,12 +32,13 @@ const VendorsSection = () => {
           <div className="relative">
             <div
               ref={scrollRef}
-              className="flex gap-4 overflow-x-auto scroll-smooth pb-2 no-scrollbar"
+              className="flex gap-4 overflow-x-auto scroll-smooth pb-2 no-scrollbar justify-center md:justify-start" // Added justify-center for smaller screens
             >
-              {vendors.map((v) => (
+              {vendorstwo.map((v) => (
                 <div
                   key={v.name}
-                  className="relative shrink-0 w-52 md:w-60 h-56 rounded-2xl overflow-hidden cursor-pointer group"
+                  className="relative shrink-0 w-[301px] h-[400px] rounded-[20px] overflow-hidden cursor-pointer group" // Applied card specifications
+                  
                 >
                   <img
                     src={v.image}
@@ -78,25 +51,32 @@ const VendorsSection = () => {
               ))}
             </div>
 
+           
+             <div className="absolute bottom-[-50px] right-0 flex gap-2 mt-4 md:mt-0">
             <button
-              onClick={() => scroll(-1)}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 z-10"
+              onClick={() => scroll(-1)} // This will do nothing as scroll() is empty
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
+                         opacity-50 cursor-not-allowed"
+              disabled
             >
               <ChevronLeft size={18} className="text-gray-700" />
             </button>
             <button
-              onClick={() => scroll(1)}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center hover:bg-gray-50 z-10"
+              onClick={() => scroll(1)} 
+              className="w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center transition-colors z-10
+                         opacity-50 cursor-not-allowed"
+              disabled
             >
               <ChevronRight size={18} className="text-gray-700" />
             </button>
           </div>
+          </div>
         </div>
       </section>
 
-      {/* ── Grow Your Business CTA ── */}
-      <section className="py-8 px-4 md:px-8 bg-[#FDF1D2]">
-        <div className="max-w-7xl mx-auto">
+    {/*  Grow Your Business CTA */}
+      <section className="py-8 px-4 md:px-8 bg-[#FDF1D2] relative z-10"> 
+        <div className="max-w-7xl mx-auto -mb-20 md:-mb-32"> 
           <div
             className="rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative"
             style={{ background: 'linear-gradient(135deg, #FF786A 0%, #FF4F37 60%, #FFC331 100%)' }}
@@ -114,17 +94,16 @@ const VendorsSection = () => {
               </button>
             </div>
 
-            {/* Decorative illustration placeholder */}
+            
             <div className="w-48 h-32 md:w-64 md:h-44 flex items-center justify-center opacity-90">
-              <svg viewBox="0 0 200 140" fill="none" className="w-full h-full">
-                <rect x="20" y="40" width="160" height="80" rx="8" fill="white" fillOpacity="0.2" />
-                <rect x="40" y="60" width="60" height="8" rx="4" fill="white" fillOpacity="0.6" />
-                <rect x="40" y="74" width="40" height="6" rx="3" fill="white" fillOpacity="0.4" />
-                <circle cx="160" cy="50" r="20" fill="white" fillOpacity="0.15" />
-                <circle cx="160" cy="50" r="12" fill="white" fillOpacity="0.25" />
-                <path d="M152 50l6 6 10-12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+  <Image
+    src="/assets/images/group.png"
+    alt="Group"
+    width={300}
+    height={200}
+    className="w-full h-full object-contain"
+  />
+</div>
 
             {/* Dashed arrow decoration */}
             <div className="absolute right-64 top-1/2 -translate-y-1/2 hidden md:block">
@@ -137,11 +116,11 @@ const VendorsSection = () => {
         </div>
       </section>
 
-      {/* ── Your Path to the Perfect Venue ── */}
-      <section className="py-16 px-4 md:px-8 bg-white">
+      {/* Your Path Section*/}
+      <section className="py-16 px-4 md:px-8 bg-white relative z-0"> {/* Added relative and z-0 */}
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-20">
               Your Path to the Perfect Venue
             </h2>
             <p className="text-gray-500 text-sm mt-3 max-w-2xl mx-auto leading-relaxed">
@@ -202,6 +181,7 @@ const VendorsSection = () => {
           </div>
         </div>
       </section>
+      
     </>
   )
 }
