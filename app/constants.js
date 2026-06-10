@@ -113,3 +113,57 @@ export const howItWorksImages = [
   'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300&q=80',
   'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=300&q=80',
 ]
+export const footerLinks = {
+  Venuze: ['About', 'News', 'Careers', 'Investors'],
+  Support: ['Listings your venue', 'Listing your service', 'Help center', 'FAQ'],
+  Explore: ['Venue types', 'Venue features', 'Service options', 'Locations'],
+  'Legal & Privacy': ['Terms of service', 'Payment & refund policy', 'Host agreement', 'Vendor agreement'],
+}
+export const stats = [
+  { value: '1,500+', label: 'Venues Vetted & Approved', color: 'bg-[#FF5037]' },
+  { value: '7,500+', label: 'Events Successfully Hosted', color: 'bg-[#FF5037]' },
+  { value: '35+', label: 'Cities Across the Region', color: 'bg-orange-400' },
+  { value: '4.9★', label: 'Average Host Rating', color: 'bg-[#FFC331]' },
+]
+
+export const testimonials = [
+  {
+    name: 'Michael Carter',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
+    rating: 5,
+  },
+  {
+    name: 'Ayesha M.',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80',
+    rating: 5,
+  },
+]
+
+export const destinations = [
+  {
+    name: 'New York, USA',
+    tagline: 'Coastal energy, modern Venue',
+    popular: 'Rooftop',
+    price: '$50 per hour',
+    venues: 24,
+    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=500&q=80',
+  },
+  {
+    name: 'London, UK',
+    tagline: 'Coastal energy, modern Venue',
+    popular: 'Rooftop',
+    price: '$25 per hour',
+    venues: 108,
+    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500&q=80',
+  },
+  {
+    name: 'Dubai, UAE',
+    tagline: 'Coastal energy, modern Venue',
+    popular: 'Rooftop',
+    price: '$50 per hour',
+    venues: 17,
+    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80',
+  },
+]

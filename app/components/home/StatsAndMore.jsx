@@ -1,65 +1,19 @@
+
 'use client'
 
-import { useRef } from 'react'
-import { ChevronLeft, ChevronRight, Star, MapPin } from 'lucide-react'
 
-const stats = [
-  { value: '1,500+', label: 'Venues Vetted & Approved', color: 'bg-[#FF5037]' },
-  { value: '7,500+', label: 'Events Successfully Hosted', color: 'bg-[#FF5037]' },
-  { value: '35+', label: 'Cities Across the Region', color: 'bg-orange-400' },
-  { value: '4.9★', label: 'Average Host Rating', color: 'bg-[#FFC331]' },
-]
+import { Rating } from '@mantine/core';
+import Image from 'next/image';
+import {stats, destinations, testimonials} from "@/app/constants"
 
-const testimonials = [
-  {
-    name: 'Michael Carter',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
-    rating: 5,
-  },
-  {
-    name: 'Ayesha M.',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80',
-    rating: 5,
-  },
-]
-
-const destinations = [
-  {
-    name: 'New York, USA',
-    tagline: 'Coastal energy, modern Venue',
-    popular: 'Rooftop',
-    price: '$50 per hour',
-    venues: 24,
-    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=500&q=80',
-  },
-  {
-    name: 'London, UK',
-    tagline: 'Coastal energy, modern Venue',
-    popular: 'Rooftop',
-    price: '$25 per hour',
-    venues: 108,
-    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500&q=80',
-  },
-  {
-    name: 'Dubai, UAE',
-    tagline: 'Coastal energy, modern Venue',
-    popular: 'Rooftop',
-    price: '$50 per hour',
-    venues: 17,
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80',
-  },
-]
 
 const StatsAndMore = () => {
-  const testimonialRef = useRef(null)
-  const scrollT = (dir) => testimonialRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' })
-
+  
   return (
     <>
-      {/* ── Stats + Testimonials ── */}
-      <section className="py-16 px-4 md:px-8 bg-[#FDF1D2]">
+      
+      
+      <section className="py-16 px-4 md:px-8 bg-[#FFF7E8]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -84,50 +38,35 @@ const StatsAndMore = () => {
             ))}
           </div>
 
-          {/* Testimonials */}
-          <div className="relative">
-            <div
-              ref={testimonialRef}
-              className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar pb-2"
-            >
-              {testimonials.map((t) => (
-                <div
-                  key={t.name}
-                  className="shrink-0 w-72 md:w-80 bg-white rounded-2xl p-5 flex gap-4 shadow-sm"
-                >
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    className="w-16 h-16 rounded-xl object-cover shrink-0"
-                  />
-                  <div>
-                    <p className="text-sm text-gray-600 leading-relaxed mb-2">{t.text}</p>
-                    <p className="text-sm font-bold text-gray-900">{t.name}</p>
-                    <div className="flex gap-0.5 mt-1">
-                      {Array.from({ length: t.rating }).map((_, i) => (
-                        <Star key={i} size={12} className="fill-[#FFC331] text-[#FFC331]" />
-                      ))}
-                    </div>
-                  </div>
+          {/* Testimonials Cards */}
+          <div className="flex flex-col md:flex-row gap-5 justify-center md:justify-between px-4">
+            {testimonials.map((t) => (
+              <div
+                key={t.name}
+          
+                className="flex-1 min-w-0 md:max-w-[48%] bg-white h-[200px]  rounded-2xl p-6 flex flex-col md:flex-row items-center md:items-start gap-4 shadow-sm" 
+              >
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover shrink-0 border-4 border-white shadow-md" 
+                />
+                <div className="text-center md:text-left mt-3 md:mt-0"> 
+                  <p className="text-base text-gray-600 leading-relaxed mb-3">{t.text}</p> 
+                  <p className="text-base font-bold text-gray-900 mb-1">{t.name}</p> 
+                  <div className="flex justify-center md:justify-start">
+  <Rating value={t.rating} size="lg" readOnly />
+</div>
                 </div>
-              ))}
-            </div>
-            <button
-              onClick={() => scrollT(-1)}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center z-10"
-            >
-              <ChevronLeft size={18} className="text-gray-700" />
-            </button>
-            <button
-              onClick={() => scrollT(1)}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-white shadow-md rounded-full flex items-center justify-center z-10"
-            >
-              <ChevronRight size={18} className="text-gray-700" />
-            </button>
+              </div>
+            ))}
           </div>
+          
+          
         </div>
+        
       </section>
-
+  
       {/* ── Destinations ── */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -177,39 +116,40 @@ const StatsAndMore = () => {
       </section>
 
       {/* ── Turn Your Venue CTA ── */}
-      <section className="py-8 px-4 md:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div
-            className="rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6"
-            style={{ background: 'linear-gradient(135deg, #FF786A 0%, #FF4F37 60%, #FFC331 100%)' }}
-          >
-            <div className="max-w-sm">
-              <h3 className="text-white font-bold text-2xl md:text-3xl leading-tight mb-2">
-                Turn Your Venue into a Destination
-              </h3>
-              <p className="text-white/80 text-sm mb-6">
-                List your space on Venuze and unlock new revenue opportunities. Reach clients
-                looking for venues just like yours.
-              </p>
-              <button className="bg-black text-white text-sm font-semibold px-6 py-3 rounded-xl hover:bg-gray-900 transition-colors">
-                List Your Venue
-              </button>
-            </div>
-
-            {/* Decorative illustration */}
-            <div className="w-48 h-36 opacity-80">
-              <svg viewBox="0 0 180 120" fill="none" className="w-full h-full">
-                <rect x="10" y="30" width="120" height="70" rx="6" fill="white" fillOpacity="0.15" />
-                <rect x="20" y="45" width="50" height="6" rx="3" fill="white" fillOpacity="0.5" />
-                <rect x="20" y="58" width="35" height="5" rx="2.5" fill="white" fillOpacity="0.35" />
-                <rect x="80" y="45" width="35" height="40" rx="4" fill="white" fillOpacity="0.2" />
-                <circle cx="155" cy="35" r="18" fill="white" fillOpacity="0.1" />
-                <circle cx="155" cy="35" r="10" fill="white" fillOpacity="0.2" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+  
+            <section className="py-8 px-4 md:px-8 bg-white relative z-10"> 
+              <div className="max-w-7xl mx-auto -mb-20 md:-mb-32"> 
+                <div
+                  className="rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative"
+                  style={{ background: 'linear-gradient(135deg, #FF786A 0%, #FF4F37 60%, #FFC331 100%)' }}
+                >
+                  <div className="max-w-sm">
+                    <h3 className="text-white font-bold text-2xl md:text-3xl leading-tight mb-2">
+                     Turn Your Venue into a Destination
+                    </h3>
+                    <p className="text-white/80 text-sm mb-6">
+                     List your space on Venuze and unlock new revenue opportunities. Reach clients looking for venues just like yours.
+                    </p>
+                    <button className="bg-black text-white text-sm font-semibold px-6 py-3 rounded-xl hover:bg-gray-900 transition-colors">
+                     List Your Venue
+                    </button>
+                  </div>
+      
+                  
+                  <div className="w-48 h-32 md:w-64 md:h-44 flex items-center justify-center opacity-90">
+        <Image
+          src="/assets/images/group.png"
+          alt="Group"
+          width={300}
+          height={200}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      
+                
+                </div>
+              </div>
+            </section>
     </>
   )
 }
