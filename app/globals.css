@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* ── Custom colors ── */
+@theme {
+  --color-primary: #FF5037;
+  --color-primary-light: #FF786A;
+  --color-gold: #FFC331;
+  --color-cream: #FDF1D2;
+  --color-dark: #1A1A1A;
+  
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* ── Hide scrollbar but keep scroll ── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1A1A1A;
+  background: #ffffff;
+}
+
+/* @import "tailwindcss";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,4 +55,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
