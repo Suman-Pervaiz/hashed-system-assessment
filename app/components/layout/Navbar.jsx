@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import {useRouter} from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Menu, X, ChevronDown, Globe, User } from 'lucide-react'
 
@@ -12,32 +13,38 @@ const Navbar = () => {
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2">
-        {/* Venuze "V" logo — orange chevron shape */}
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <path d="M4 6L16 26L28 6H20L16 14L12 6H4Z" fill="#FF5037" />
-        </svg>
-        <span className="text-white font-bold text-xl tracking-tight">venuze</span>
-      </Link>
+     <Link href="/" className="flex items-center gap-2">
+  <Image
+    src="/assets/images/venuzelogo.png"
+    alt="Venuze Logo"
+    width={45}
+    height={45}
+    priority
+  />
+
+  <span className="text-white font-bold text-xl tracking-tight">
+    venuze
+  </span>
+</Link>
 
       {/* Desktop right side */}
       <div className="hidden md:flex items-center gap-3">
-        {/* Add your listing button */}
-        <button className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-200">
+ 
+        <button className=" text-[#FF5037] flex items-center gap-2 bg-white hover:bg-white/20  text-sm font-medium px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-200">
           Add your listing
           <ChevronDown size={14} />
         </button>
 
-        {/* Language */}
-        <button className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-3 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-200">
+      
+        <button className="flex items-center gap-1 bg-white hover:bg-white/20 text-[#FF5037] text-sm font-medium px-3 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-200">
           <Globe size={14} />
           EN
           <ChevronDown size={12} />
         </button>
 
-        {/* User icon */}
-        <button onClick={() => router.push('/login')} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-200 cursor-pointer">
-          <User size={16} className="text-white" />
+        {/* User icon/login */}
+        <button onClick={() => router.push('/login')} className="w-9 h-9 rounded-full bg-white hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-200 cursor-pointer">
+          <User size={16} className="text-[#FF5037]" />
         </button>
       </div>
 

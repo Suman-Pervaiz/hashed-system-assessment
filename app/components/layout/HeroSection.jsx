@@ -3,12 +3,11 @@
 import { useState } from 'react'
 import { Search, MapPin, Calendar, Users, Building2, Sparkles } from 'lucide-react'
 
-// Unsplash images — tum baad mein apni images se replace karna
 const heroImages = [
-  'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1400&q=80', // party/celebration
-  'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1400&q=80', // venue
-  'https://images.unsplash.com/photo-1519671282429-b8c78e8c7f2a?w=1400&q=80', // event
-]
+  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1400&q=80",
+  "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1400&q=80",
+  "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1170&auto=format&fit=crop",
+];
 
 const tabs = ['Venue', 'Vendors']
 
@@ -27,7 +26,7 @@ const HeroSection = () => {
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* Navbar goes on top */}
+      
       {/* Hero content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">
         {/* Heading */}
@@ -35,15 +34,15 @@ const HeroSection = () => {
           Celebrate in venues<br />big and small
         </h1>
 
-        {/* Search card */}
+        {/* Search card not functional yet*/}
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Tabs */}
-          <div className="flex border-b border-gray-100">
+          <div className="flex border-b border-gray-100  justify-center">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-200 ${
+                className={`flex items-center  gap-2 px-6 py-3 text-sm font-semibold transition-all duration-200 ${
                   activeTab === tab
                     ? 'bg-[#FF5037] text-white'
                     : 'text-gray-500 hover:text-gray-800'
@@ -66,7 +65,7 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* When */}
+           
             <div className="flex-1 flex items-center gap-3 px-5 py-4">
               <Calendar size={16} className="text-gray-400 shrink-0" />
               <div className="flex flex-col text-left">
@@ -75,7 +74,7 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Guests */}
+         
             <div className="flex-1 flex items-center gap-3 px-5 py-4">
               <Users size={16} className="text-gray-400 shrink-0" />
               <div className="flex flex-col text-left">
@@ -84,13 +83,16 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Search button */}
-            <div className="flex items-center px-4 py-3">
-              <button className="flex items-center gap-2 bg-[#FF5037] hover:bg-[#e04430] text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 w-full md:w-auto justify-center">
-                <Search size={16} />
-                Search
-              </button>
-            </div>
+        
+           <div className="flex items-center px-4 py-3">
+  <button
+    disabled
+    className="flex items-center gap-2 bg-[#FF5037] text-white font-semibold px-6 py-3 rounded-xl w-full md:w-auto justify-center cursor-not-allowed opacity-50"
+  >
+    <Search size={16} />
+    Search
+  </button>
+</div>
           </div>
         </div>
 
